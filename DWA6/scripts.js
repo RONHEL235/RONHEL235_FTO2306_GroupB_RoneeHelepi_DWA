@@ -1,10 +1,21 @@
 import { books, authors, genres, BOOKS_PER_PAGE } from './data.js'
 
 let page = 1
-let matches = books
+let matches = books //Array of book objects
 
-//1
-const createButton = ({ author, id, image, title }) => {
+/**
+ * Creates a book item element for a given match object.
+ * 
+ * @param {Object} match - The match object containing information about a book.
+ * @param {string} match.author - The author of the book.
+ * @param {string} match.id - The unique id of the book.
+ * @param {string} match.image - The URL of the books cover image of the book.
+ * @param {string} match.tittle - The tittle of the book.  
+ * @returns {HTMLButtonElement} - A button element representing the book with its details.
+ */
+
+const createBookItem = (book) => {
+    const { author, id, image, title } = book
     const element = document.createElement('button')
     element.classList ='preview'
     element.setAttribute('data-preview', id)
@@ -18,13 +29,24 @@ const createButton = ({ author, id, image, title }) => {
     return element
 } 
 
+/**
+ * The starting point for creating a list of book items based on matches.
+ */
 const starting = document.createDocumentFragment()
-matches.slice(0, BOOKS_PER_PAGE).forEach( match => {
-    starting.appendChild(createButton(match))
-})
+/**
+ * Iterates over a subset of matches, creates book items for each match, and appends them to the starting document fragment.
+ */
+matches.slice(0, BOOKS_PER_PAGE).forEach( book => {starting.appendChild(createBookItem(book))})
 document.querySelector('[data-list-items]').appendChild(starting)
 
-//2
+
+/**
+ * Creates an HTML <option> element with specified value and text content. 
+ * 
+ * @param {string} value - The value associated with the option element.
+ * @param {string} text - The visible text or label for the option.
+ * @returns {HTMLOptionElement} A newly created <option> element.   
+ */
 const createOptionElement = (value, text) => {
     const option = document.createElement('option')
     option.value = value
@@ -32,21 +54,37 @@ const createOptionElement = (value, text) => {
     return option
 }
 
-const getGenresAndAuthors = (data, dropDownSelector, allText) => {
-    const genreAndAuthorsHtml = document.createDocumentFragment()
-    genreAndAuthorsHtml.appendChild(createOptionElement('any', allText))
+
+/**
+ * Populates a dropdown (select) element with options based on the provided data.
+ * 
+ * @param {object} data - An object containing key-value pairs to create dropdown options. 
+ * @param {string} dropDownSelector - The CSS selector for the dropdown element in the document.  
+ * @param {string} allText - The text to be displayed for the default option.
+ * @returns {void} This function does not return a value directly, it populates the specified dropdown. 
+ */
+const populateDropdownWithOptions = (data, dropDownSelector, allText) => {
+    const fragment = document.createDocumentFragment()
+    fragment.appendChild(createOptionElement('any', allText))
 
     Object.entries(data).forEach(([id, name]) => {
-        genreAndAuthorsHtml.appendChild(createOptionElement(id, name))
+        fragment.appendChild(createOptionElement(id, name))
     })
-    document.querySelector(dropDownSelector).appendChild(genreAndAuthorsHtml)
+    document.querySelector(dropDownSelector).appendChild(fragment)
 }
 
-getGenresAndAuthors(genres, '[data-search-genres]', 'All Genres')
-getGenresAndAuthors(authors, '[data-search-authors]', 'All Authors')
+populateDropdownWithOptions(genres, '[data-search-genres]', 'All Genres')
+populateDropdownWithOptions(authors, '[data-search-authors]', 'All Authors')
 
-//3
-const setTheme = (theme, darkColor, lightColor) => {
+
+/**
+ * Sets the theme, dark dark color, and light color for a web application.
+ * 
+ * @param {string} theme - The theme name, e.g., 'day' or 'night'.
+ * @param {string} darkColor - The dark color in rgb format, e.g., '10, 10, 10'.
+ * @param {string} lightColor - The dark color in rgb format, e.g., '255, 255, 255'.
+ */
+const applyThemeSettings = (theme, darkColor, lightColor) => {
     const themeElement = document.querySelector('[data-settings-theme]')
     const rootStyle = document.documentElement.style
 
@@ -58,44 +96,50 @@ const setTheme = (theme, darkColor, lightColor) => {
 const isDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
 
 if (isDarkMode) {
-    setTheme('night', '255, 255, 255', '10, 10, 20')
+    applyThemeSettings('night', '255, 255, 255', '10, 10, 20')
 } else {
-    setTheme('day', '10, 10, 20', '255, 255, 255')
+    applyThemeSettings('day', '10, 10, 20', '255, 255, 255')
 }
 
-//4 - No abstraction
+/**
+ * Configure and update the behavior and content of a "Show more" button in a list view. 
+ */
 const dataListButton = document.querySelector('[data-list-button]')
 dataListButton.innerText = `Show more (${books.length - BOOKS_PER_PAGE})`
 dataListButton.disabled = (matches.length - (page * BOOKS_PER_PAGE)) > 0
 dataListButton.innerHTML = `
     <span>Show more</span>
-    <span class="list__remaining"> (${(matches.length - (page * BOOKS_PER_PAGE)) > 0 ? (matches.length - (page * BOOKS_PER_PAGE)) : 0})</span>
+    <span class="list__remaining"> (${dataListButton.disabled ? (matches.length - (page * BOOKS_PER_PAGE)) : 0})</span>
 `
 
-//5
-const addToggleEventListener = (triggerSelector, targetSelector, isOpen = true, focusSelector = null) => {
-    document.querySelector(triggerSelector).addEventListener('click', () => {
-        const target = document.querySelector(targetSelector)
-        
-        if (target) {
-            target.open = isOpen
 
-            if (focusSelector) {
-                const focusElement = document.querySelector(focusSelector)
-                if (focusElement) focusElement.focus()
-            }
-        }
-    })
-}
+document.querySelector('[data-search-cancel]').addEventListener('click', () => {
+    document.querySelector('[data-search-overlay]').open = false
+})
 
-// Usage
-addToggleEventListener('[data-search-cancel]', '[data-search-overlay]', false);
-addToggleEventListener('[data-settings-cancel]', '[data-settings-overlay]', false);
-addToggleEventListener('[data-header-search]', '[data-search-overlay]', true, '[data-search-title]');
-addToggleEventListener('[data-header-settings]', '[data-settings-overlay]', true);
-addToggleEventListener('[data-list-close]', '[data-list-active]', false);
+document.querySelector('[data-settings-cancel]').addEventListener('click', () => {
+    document.querySelector('[data-settings-overlay]').open = false
+})
 
-//6
+document.querySelector('[data-header-search]').addEventListener('click', () => {
+    document.querySelector('[data-search-overlay]').open = true 
+    document.querySelector('[data-search-title]').focus()
+})
+
+document.querySelector('[data-header-settings]').addEventListener('click', () => {
+    document.querySelector('[data-settings-overlay]').open = true 
+})
+
+document.querySelector('[data-list-close]').addEventListener('click', () => {
+    document.querySelector('[data-list-active]').open = false
+})
+
+
+/**
+ * Sets the theme-related colors for a web page based on the chosen theme.
+ * 
+ * @param {string} theme 
+ */
 const setThemeColors = (theme) => {
     const rootStyle = document.documentElement.style
     
@@ -118,7 +162,7 @@ const handleSettingsFormSubmit = (event) => {
     document.querySelector('[data-settings-overlay]').open = false
 }
 
-// Usage
+// Usage: Add a form submission event listener to apply theme settings.
 document.querySelector('[data-settings-form]').addEventListener('submit', handleSettingsFormSubmit)
 
 
