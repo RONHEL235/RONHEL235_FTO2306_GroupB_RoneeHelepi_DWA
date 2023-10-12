@@ -14,42 +14,45 @@ let matches = books //Array of book objects
  * @returns {HTMLButtonElement} - A button element representing the book with its details.
  */
 
-/* Using closures to create a reusable factory for generating HTML elements with specific data, and it allows you to easily add these elements to your web page. Closures are used to capture and remember the authors, BOOKS_PER_PAGE, and matches data so that it can be utilized when creating the book items. */
-const bookItemFactory = (authors) => {
+function createBookItemFactory(authors) {
     return (book) => {
-      const { author, id, image, title } = book
-      const element = document.createElement('button')
-      element.classList = 'preview'
-      element.setAttribute('data-preview', id)
+      const { author, id, image, title } = book;
+  
+      const element = document.createElement('button');
+      element.classList = 'preview';
+      element.setAttribute('data-preview', id);
       element.innerHTML = `
         <img class="preview__image" src="${image}"/>
         <div class="preview__info">
           <h3 class="preview__title">${title}</h3>
           <div class="preview__author">${authors[author]}</div>
         </div>
-      `
-
-      return element
-    }
-}
+      `;
   
-const bookListFactory = (matches, BOOKS_PER_PAGE, authors) => {
+      return element;
+    };
+  }
+  
+  function createBookListFactory(matches, BOOKS_PER_PAGE, authors) {
     return () => {
-        const starting = document.createDocumentFragment()
-        matches.slice(0, BOOKS_PER_PAGE).forEach((book) => {
-        const createBookItem = bookItemFactory(authors)// Therefore the bookItemFactory function is in bookListFactory  
-        const bookItem = createBookItem(book) //Get another layer deep to get the information to be displayed on HTML
-        starting.appendChild(bookItem)
-        })
-
-        return starting //The fragment 
-    }
-}
+      const starting = document.createDocumentFragment();
+  
+      matches.slice(0, BOOKS_PER_PAGE).forEach((book) => {
+        const createBookItem = createBookItemFactory(authors);
+        const bookItem = createBookItem(book);
+        starting.appendChild(bookItem);
+      });
+  
+      return starting;
+    };
+  }
   
   // Usage
-  const bookList = bookListFactory(matches, BOOKS_PER_PAGE, authors) //Closure things
-  const startingFragment = bookList() //The closure call
-  document.querySelector('[data-list-items]').appendChild(startingFragment) // Select the data attribute in HTML   
+  const createBookList = createBookListFactory(matches, BOOKS_PER_PAGE, authors);
+  const startingFragment = createBookList();
+  document.querySelector('[data-list-items]').appendChild(startingFragment);
+  
+
 
 
 /**
