@@ -14,42 +14,58 @@ let matches = books //Array of book objects
  * @returns {HTMLButtonElement} - A button element representing the book with its details.
  */
 
-const createBookItemFactory = (authors) => {
-    return (book) => {
-      const { author, id, image, title } = book;
-      const element = document.createElement('button');
-      element.classList = 'preview';
-      element.setAttribute('data-preview', id);
-      element.innerHTML = `
-        <img class="preview__image" src="${image}"/>
-        <div class="preview__info">
-          <h3 class="preview__title">${title}</h3>
-          <div class="preview__author">${authors[author]}</div>
-        </div>
+// script.js
+class BookComponent extends HTMLElement {
+    constructor() {
+      super();
+      this.attachShadow({ mode: 'open' });
+    }
+  
+    connectedCallback() {
+      const { author, id, image, title } = this.bookData;
+      this.shadowRoot.innerHTML = `
+        <style>
+          .preview {
+            /* Your styles here */
+          }
+        </style>
+        <button class="preview" data-preview="${id}">
+          <img class="preview__image" src="${image}"/>
+          <div class="preview__info">
+            <h3 class="preview__title">${title}</h3>
+            <div class="preview__author">${this.authors[author]}</div>
+          </div>
+        </button>
       `;
+    }
   
-      return element;
-    };
+    set bookData(book) {
+      this.setAttribute('data-preview', book.id);
+      this.authors = authors; // Make sure 'authors' is defined
+      this._bookData = book;
+      this.render();
+    }
+  
+    get bookData() {
+      return this._bookData;
+    }
+  
+    render() {
+      this.connectedCallback();
+    }
   }
   
-  const createBookListFactory = (matches, BOOKS_PER_PAGE, authors) => {
-    return () => {
-      const starting = document.createDocumentFragment();
-  
-      matches.slice(0, BOOKS_PER_PAGE).forEach((book) => {
-        const createBookItem = createBookItemFactory(authors);
-        const bookItem = createBookItem(book);
-        starting.appendChild(bookItem);
-      });
-  
-      return starting;
-    };
-  }
+  customElements.define('book-item', BookComponent);
   
   // Usage
-  const createBookList = createBookListFactory(matches, BOOKS_PER_PAGE, authors);
-  const startingFragment = createBookList();
-  document.querySelector('[data-list-items]').appendChild(startingFragment);
+  
+  const dataListItems = document.querySelector('[data-list-items]');
+  matches.slice(0, BOOKS_PER_PAGE).forEach((book) => {
+    const bookItem = document.createElement('book-item');
+    bookItem.bookData = book;
+    dataListItems.appendChild(bookItem);
+  });
+  
   
 
 
