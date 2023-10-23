@@ -1,66 +1,43 @@
-//Interface
+import { createStore } from 'redux'
 
-/**
- * @typedef {object} Item
- * @prop {number} value
- */
+//State
+const initialState = {
+   count: 0
+}
 
-/**
- * @typedef {object} State
- * @prop {Item} wind
- * @prop {Item} temperature 
- * @prop {Item} humidity  
- */
+//Actions
+const increment = () => {
+    return { type: 'INCREMENT' }
+}
+  
+const decrement = () => {
+    return { type: 'DECREMENT' }
+}
 
-/** //A function
- * @callback Action
- * @param {State}
- * @returns {State}
- */
+const reset = () => {
+    return { type: 'RESET' }
+}
 
-/** //A function 
- * @callback Update
- * @param {Action}
- */
-
-/** //A function 
- * @callback Subscribe
- */
-
-/** 
- * @typedef {object} Store
- * @prop {Update} update
- * @prop {Subscribe} subscribe
- */
-
-//All our side effects happen here
-//Side effects is usually where you data resides
-const initial = {
-    wind: {
-        value: 1,
-    },
-    temperature: {
-        value: 1,
-    },
-    humidity: {
-        value: 1,
+//Reducer
+const counterReducer = (initialState, action) => {
+    const { ...state } = initialState
+    switch (action.type) {
+      case 'INCREMENT':
+        return initialState.count + 1
+      case 'DECREMENT':
+        return initialState.count - 1
+      case 'RESET':
+        return initialState.count = 0
+      default:
+        return initialState.count
     }
 }
 
-// Store handles all the side effects for you.
-//This function is the only function that can be mutated
+const store = createStore(counterReducer);
 
-const states = [initial] //The state can be replaced
+// Subscribe to the store to listen for changes
+store.subscribe(() => console.log('Current count:', store.getState()))
 
-export const update = (action) => {
-    if (typeof action !== 'function') {
-        throw new Error('action is required to be a function')
-    }
+store.dispatch(increment());
+store.dispatch(increment());
 
-    const prev = Object.freeze({ ...states[0] })
-    const next = Object.freeze({ ...action(prev) })
-
-    states.unshift(next)
-}
-
-export const subscribe = () => {}

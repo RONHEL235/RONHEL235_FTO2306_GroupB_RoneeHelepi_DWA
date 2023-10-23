@@ -1,9 +1,9 @@
-/* const MAX_NUMBER = 15
+const MAX_NUMBER = 15
 const MIN_NUMBER = -5
 
 const number = document.querySelector('[data-key="number"]')
-const subtract = document.querySelector('dash-lg')
-const add = document.querySelector('plus-lg')
+const subtract = document.getElementsByTagName('sl-icon-button')
+const add = document.getElementsByTagName('sl-icon-button')
 
 const subtracthandler = () => {
 
@@ -33,10 +33,10 @@ const addhandler = () => {
 }
 
 subtract.addEventListener('click', subtracthandler)
-add.addEventListener('click', addhandler) */
+add.addEventListener('click', addhandler)
 
 
-const createUser = ({ firstName, lastName, email }) => ({
+/* const createUser = ({ firstName, lastName, email }) => ({
     firstName,
     lastName,
     email,
@@ -58,4 +58,4 @@ const createUser = ({ firstName, lastName, email }) => ({
   });
   
   console.log(user1);
-  console.log(user2);
+  console.log(user2); */

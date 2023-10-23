@@ -63,7 +63,7 @@ body {
     display: flex;
 }
 
-.counter__button {
+sl-icon-button {
     background: none;
     width: 50%;
     border-width: 0;
@@ -75,16 +75,16 @@ body {
     transform: translateY(0); 
 }
 
-.counter__button:disable {
+sl-icon-button:disable {
     opacity: 0.2;
 }
 
-.counter__button:active {
+sl-icon-button:active {
     background: var(--color-medium-grey);
     transform: translateY(2%);
 }
 
-.counter__button_first {
+sl-icon-button_first {
     border-right: 1px solid var(--color-light-grey);
 }
 

@@ -1,11 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Tally Count</title>
+        <link rel="stylesheet" href="styles.css"/>
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+        <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@400;500;800;900&family=Roboto:wght@400;500;900&display=swap" rel="stylesheet">
+
+        <script src="scripts.js" defer type="module"></script>
+        <script src="store.js" defer type="module"></script>
+    </head>
+    <body>
+        <header class="header">
+            <h1>Tally Count</h1>
+        </header>
+      <!--   <aside class="controls">
+            <label>
+                <span>Display</span>
+                    <select>
+                        <option>Single</option>
+                        <option>Multiple</option>
+                    </select>
+            </label>
+            <label>
+                <span>Counter</span>
+                    <select>
+                        <option>Counter 1</option>
+                        <option>Counter 2</option>
+                        <option>Counter 3</option>
+                    </select>
+            </label>
+            <button>
+
+            </button>    
+        </aside> -->
+        <noscript class="error">
+            JavaScript is Disabled
+        </noscript>
+        <main class="counter">
+            <input class="counter_value" readonly value="0" data-key="number" >
+            <div class="counter__actions">
+                <button class="counter__button counter__button_first" data-key="subtract">-</button>
+                <button class="counter__button" data-key="add">+</button>
+            </div>
+        </main>
+        <footer class="footer">
+            Inpired by Tally App. this is amerely a student practice project for learning Javascript
+        </footer>
+    </body>
 </html>
