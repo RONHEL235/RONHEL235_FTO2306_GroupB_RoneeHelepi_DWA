@@ -1,15 +1,11 @@
+// Redux setup
 import { createStore } from 'redux'
 
-//State
-const initialState = {
-   count: 0
-}
-
-//Actions
+// Actions
 const increment = () => {
     return { type: 'INCREMENT' }
 }
-  
+
 const decrement = () => {
     return { type: 'DECREMENT' }
 }
@@ -17,27 +13,31 @@ const decrement = () => {
 const reset = () => {
     return { type: 'RESET' }
 }
-
-//Reducer
-const counterReducer = (initialState, action) => {
-    const { ...state } = initialState
-    switch (action.type) {
-      case 'INCREMENT':
-        return initialState.count + 1
-      case 'DECREMENT':
-        return initialState.count - 1
-      case 'RESET':
-        return initialState.count = 0
-      default:
-        return initialState.count
-    }
+  
+// Reducer
+const counterReducer = (state = 0, action) => {
+  switch (action.type) {
+    case 'INCREMENT':
+      return state + 1
+    case 'DECREMENT':
+      return state - 1
+    case 'RESET':
+      return state = 0
+    default:
+      return state
+  }
 }
 
-const store = createStore(counterReducer);
+// Create a Redux store
+const store = createStore(counterReducer)
 
 // Subscribe to the store to listen for changes
 store.subscribe(() => console.log('Current count:', store.getState()))
 
-store.dispatch(increment());
-store.dispatch(increment());
-
+// Dispatch actions to update the state
+store.dispatch(increment())
+store.dispatch(increment())
+store.dispatch(increment())
+store.dispatch(reset())
+store.dispatch(decrement())
+store.dispatch(increment())
