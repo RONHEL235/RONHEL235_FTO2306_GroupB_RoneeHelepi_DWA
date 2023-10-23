@@ -1,10 +1,10 @@
 // Redux setup
 import { createStore } from 'redux'
+
 //State
 const initialState = {
     counter: 0
 }
-
 
 // Actions
 const increment = () => {
@@ -23,15 +23,15 @@ const reset = () => {
 const counterReducer = (state = initialState, action) => {
     switch (action.type) {
         case 'INCREMENT':
-            return { ...state, counter: state.counter + 1 };
+            return { ...state, counter: state.counter + 1 }
         case 'DECREMENT':
-            return { ...state, counter: state.counter - 1 };
+            return { ...state, counter: state.counter - 1 }
         case 'RESET':
-            return { ...state, counter: 0 };
+            return { ...state, counter: 0 }
         default:
-            return state;
+            return state
     }
-};
+}
 // Create a Redux store
 const store = createStore(counterReducer)
 
