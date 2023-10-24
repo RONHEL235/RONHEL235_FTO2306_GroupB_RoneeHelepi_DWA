@@ -4,9 +4,9 @@ const MIN_NUMBER = -5
 const number = document.querySelector('[data-key="number"]')
 const subtract = document.getElementsByTagName('sl-icon-button')
 const add = document.getElementsByTagName('sl-icon-button')
+const reset = document.getElementsByTagName('sl-icon-button')
 
 const subtracthandler = () => {
-
     const newValue = parseInt(number.value) - 1
     number.value = newValue
 
