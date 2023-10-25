@@ -147,5 +147,4 @@ const recreatedArray = products.map(entry =>
       })
     )
   )
-  
   console.log(recreatedArray)
