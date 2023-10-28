@@ -16,8 +16,8 @@ const names = ['Ashwin', 'Sibongile', 'Jan-Hendrik', 'Sifso', 'Shailen', 'Frikki
     })
 }
 
-provincesAndNames(provinces, names)
- */
+provincesAndNames(provinces, names) */
+
 
 //1.3
 /* const upperCase = provinces.map((element) => {
@@ -28,7 +28,7 @@ console.log(upperCase) */
 
 //1.4
 /* const elementLength = (anArray) => {
-    return anArray.map(element => element.length)
+  return anArray.map(element => element.length)
 }
 
 console.log(elementLength(names))
@@ -58,12 +58,12 @@ console.log(provinces.length) */
 console.log(containS) */
 
 //1.8
-/* const indivisualProvince = names.reduce((obj, name, index) => {
+const indivisualProvince = names.reduce((obj, name, index) => {
     obj[name] = provinces[index]
     return obj
 }, {})
 
-console.log(indivisualProvince) */
+console.log(indivisualProvince)
 
 //2
 const products = [
@@ -135,7 +135,7 @@ console.log(combinedPrice) */
   console.log(resultString)  */ 
 
 //6
-const recreatedArray = products.map(entry =>
+/* const recreatedArray = products.map(entry =>
     Object.fromEntries(
       Object.entries(entry).map(([key, value]) => {
         if (key === 'product') {
@@ -147,4 +147,4 @@ const recreatedArray = products.map(entry =>
       })
     )
   )
-  console.log(recreatedArray)
+  console.log(recreatedArray) */

@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "lit": "^3.0.0",
     "redux": "^4.2.1"
   },
   "type": "module"
