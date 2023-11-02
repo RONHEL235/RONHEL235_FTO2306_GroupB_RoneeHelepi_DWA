@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "eslint-plugin-disable": "^2.0.3",
     "lit": "^3.0.0",
     "redux": "^4.2.1"
   },
