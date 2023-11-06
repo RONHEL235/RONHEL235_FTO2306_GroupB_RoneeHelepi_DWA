@@ -1,0 +1,40 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+nav {
+  background-color: grey;
+  height: 70px;
+  display: flex;
+  padding: 16px 36px;
+}
+
+.nav--logo {
+  max-width: 100px;
+}
+
+section {
+  padding: 20px;
+}
+
+.hero {
+  display: flex;
+  flex-direction: column;
+}
+
+.hero--photo {
+  max-width: 400px;
+  align-self: center;
+}
+
+.hero--header {
+  margin-bottom: 16px;
+}
+
+.hero-text {
+  margin-top: 0;
+}
