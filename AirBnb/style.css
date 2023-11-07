@@ -4,13 +4,23 @@
 
 body {
   margin: 0;
+  font-family: 'Poppins', sans-serif;
 }
 
 nav {
-  background-color: grey;
   height: 70px;
   display: flex;
-  padding: 16px 36px;
+  padding: 20px 36px;
+  box-shadow: 0px 2.98256px 7.4564px rgba(0, 0, 0, 0.1);
+  background-color: #918E9B;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.gray {
+  color: #918E9B;
 }
 
 .nav--logo {
@@ -27,7 +37,7 @@ section {
 }
 
 .hero--photo {
-  max-width: 400px;
+  max-width: 90vw;
   align-self: center;
 }
 
@@ -35,6 +45,58 @@ section {
   margin-bottom: 16px;
 }
 
-.hero-text {
+.hero--text {
   margin-top: 0;
+}
+
+.card {
+  width: 100px;
+  font-size: 12px;
+  flex: 0 0 auto;       
+  display: flex;        
+  flex-direction: column;
+  margin-left: 20px;
+  position: relative;
+}
+
+.cards-list {
+  display: flex;
+  gap: 100px;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+}
+
+.card--title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card--image {
+  width: 200px;
+  height: 250px;
+  border-radius: 5px;
+}
+
+.card--stats {
+  margin-top: 18px;
+  display: flex;
+  align-items: center;
+}
+
+.card--star {
+  height: 14px;
+}
+
+.card--price {
+  margin-top: auto;
+}
+
+.card--badge {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  background-color: white;
+  padding: 5px 7px;
+  border-radius: 2px;
+  font-weight: bold;
 }
