@@ -10,13 +10,7 @@ export default function App() {
     const { title, price, coverImg, stats, location, openSpots, id } = element
     return (<Card 
     key={id}  
-    title={title}
-    price={price}
-    img={coverImg}
-    rating={stats.rating}
-    reviewCount={stats.reviewCount}
-    location={location}
-    openSpots={openSpots}
+    element={element}
     />
     )
   })
